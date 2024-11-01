@@ -1,6 +1,30 @@
 import "./App.css";
+import CustomTabs from "./components/CustomTabs/CustomTabs";
 
 function App() {
+    const dataTabs = [
+        {
+            label: "Transaccion",
+            content: "Informacion de las transacciones",
+        },
+        {
+            label: "Deudas",
+            content: "Informacion de las Deudas",
+        },
+        {
+            label: "Miembros",
+            content: "Informacion de las Miembros",
+        },
+        {
+            label: "Permisos",
+            content: "Informacion de las Permisos",
+        },
+        {
+            label: "Actividad Reciente",
+            content: "Informacion de las Actividad Reciente",
+        },
+    ];
+
     return (
         <>
             <header>
@@ -35,13 +59,7 @@ function App() {
                         </div>
                     </div>
                 </div>
-                <div className="menu">
-                    <button className="options">Transacciones</button>
-                    <button className="options">Deudas</button>
-                    <button className="options">Miembros</button>
-                    <button className="options">Permisos</button>
-                    <button className="options">Actividad reciente</button>
-                </div>
+                <CustomTabs data={dataTabs}/>
                 <div className="transactions">
                     <div className="transaction-month">Octubre 2024</div>
                     <div className="transaction-list">
