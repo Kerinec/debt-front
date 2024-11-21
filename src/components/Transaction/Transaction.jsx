@@ -1,4 +1,5 @@
 import axios from "axios";
+import { elements } from "chart.js";
 import { useEffect, useState } from "react";
 
 const Transaction = () => {
@@ -9,21 +10,19 @@ const Transaction = () => {
 
     const getTransactions = async () => {
         let response = await axios.get(`http://localhost:3000/transactions`);
-        console.log(response, "recibe respuesta")
         setTransactionData(response.data);
     };
-    console.log(transactionData, "lista");
     return (
         <div className="transactions">
-            {transactionData.map((month) => {
+            {transactionData.map((month, index) => {
                 return (
-                    <>
+                    <div className="month-container" key={"month" + index}>
                         <div className="transaction-month">{month.date}</div>
                         <div className="transaction-list">
-                            {month.transactions.map((element) => (
+                            {month.transactions.map((element, i) => (
                                 <div
                                     className="transaction-container"
-                                    key={element.id + "container"}
+                                    key={element.id + "container" + i}
                                 >
                                     <div className="transaction-date">
                                         {new Date(
@@ -42,7 +41,7 @@ const Transaction = () => {
                                 </div>
                             ))}
                         </div>
-                    </>
+                    </div>
                 );
             })}
         </div>

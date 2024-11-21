@@ -15,7 +15,6 @@ function App() {
         let response = await axios.get(`http://localhost:3000/members`);
         setDataMembers(response.data);
     };
-    console.log(dataMembers,"app,members")
     const dataTabs = [
         {
             label: "Transaccion",

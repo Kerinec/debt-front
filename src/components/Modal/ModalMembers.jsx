@@ -26,7 +26,6 @@ const ModalMembers = ({ getMembers }) => {
             getMembers();
             handleClose();
         } catch (error) {
-            console.log(error);
             if (error.response.data.error === "UserAlreadyExists") {
                 setErrorExist({
                     error: true,

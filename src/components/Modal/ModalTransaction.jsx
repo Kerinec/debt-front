@@ -12,9 +12,12 @@ import {
 } from "../CustomComponents";
 const ModalTransaction = ({ dataMembers }) => {
     const [open, setOpen] = useState(false);
+    const [formData, setFormData] = useState({ amount: undefined });
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    console.log(dataMembers, "member,modal");
+    const handleChange = (e) => {
+        setFormData({ amount: e.target.value });
+    };
     return (
         <div>
             <CustomButton onClick={handleOpen} label={"Añadir Transacción"} />
@@ -34,7 +37,11 @@ const ModalTransaction = ({ dataMembers }) => {
                     <div className="debt-person-container">
                         <CustomInputSelect data={dataMembers} />
                     </div>
-                    <CustomInput label={"Cantidad"} textAlign={"right"} />
+                    <CustomInput
+                        label={"Cantidad"}
+                        textAlign={"right"}
+                        onChange={handleChange}
+                    />
                     <div className="debt-split-persons-title">Para quién</div>
                     <div className="split-debt-container">
                         {dataMembers.map((member) => {

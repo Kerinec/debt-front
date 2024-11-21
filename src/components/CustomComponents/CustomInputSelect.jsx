@@ -51,7 +51,6 @@ const CustomInputSelect = ({ data }) => {
     const handleChange = (e) => {
         setDataMember(e.target.value);
     };
-    console.log(data, "members");
     return (
         <>
             {dataMember !== "" ? (
@@ -84,6 +83,6 @@ const CustomInputSelect = ({ data }) => {
     );
 };
 CustomInputSelect.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.string).isRequired,
+    data: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 export default CustomInputSelect;
