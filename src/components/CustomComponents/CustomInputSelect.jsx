@@ -5,10 +5,10 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import { createTheme } from "@mui/material";
 import { useState } from "react";
-import PropTypes from 'prop-types';
-
+import PropTypes from "prop-types";
 const CustomInputSelect = ({ data }) => {
-    const [dataMember, setDataMember] = useState("")
+    const [dataMember, setDataMember] = useState("");
+
     const theme = createTheme({
         components: {
             MuiSelect: {
@@ -48,11 +48,15 @@ const CustomInputSelect = ({ data }) => {
             },
         },
     });
-    const handleChange = (e) =>{
-        setDataMember(e.target.value)
-    }
+    const handleChange = (e) => {
+        setDataMember(e.target.value);
+    };
+    console.log(data, "members");
     return (
         <>
+            {dataMember !== "" ? (
+                <div className="logo-person">{dataMember[0]}</div>
+            ) : null}
             <ThemeProvider theme={theme}>
                 <FormControl>
                     <InputLabel id="select-label">Pagó</InputLabel>
@@ -66,10 +70,10 @@ const CustomInputSelect = ({ data }) => {
                         {data.map((member) => {
                             return (
                                 <MenuItem
-                                    value={member}
-                                    key={member + "member"}
+                                    value={member.name}
+                                    key={member.name + "member"}
                                 >
-                                    {member}
+                                    {member.name}
                                 </MenuItem>
                             );
                         })}
@@ -81,5 +85,5 @@ const CustomInputSelect = ({ data }) => {
 };
 CustomInputSelect.propTypes = {
     data: PropTypes.arrayOf(PropTypes.string).isRequired,
-  };
+};
 export default CustomInputSelect;

@@ -15,6 +15,7 @@ function App() {
         let response = await axios.get(`http://localhost:3000/members`);
         setDataMembers(response.data);
     };
+    console.log(dataMembers,"app,members")
     const dataTabs = [
         {
             label: "Transaccion",
@@ -42,7 +43,7 @@ function App() {
         <>
             <header>
                 <div className="logo">Pasta Gansa</div>
-                <ModalTransaction />
+                <ModalTransaction dataMembers={dataMembers} />
                 <div className="user-info">
                     <div className="user-name">Carlos Kerinec</div>
                     <div className="user-email">carloskerinec@gmail.com</div>

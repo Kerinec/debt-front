@@ -4,6 +4,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { createTheme } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
+import dayjs from "dayjs";
 
 const CustomDate = () => {
     const theme = createTheme({
@@ -55,7 +56,7 @@ const CustomDate = () => {
             <ThemeProvider theme={theme}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={["DatePicker"]}>
-                        <DatePicker label="Fecha" />
+                        <DatePicker label="Fecha" defaultValue={dayjs()} />
                     </DemoContainer>
                 </LocalizationProvider>
             </ThemeProvider>

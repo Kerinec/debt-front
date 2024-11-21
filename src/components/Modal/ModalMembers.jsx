@@ -1,15 +1,7 @@
 import { useState } from "react";
 import "./ModalMembers.css";
 import Modal from "@mui/material/Modal";
-import CancelIcon from "@mui/icons-material/Cancel";
-import { IconButton } from "@mui/material";
-import Checkbox from "@mui/material/Checkbox";
-import {
-    CustomInput,
-    CustomInputSelect,
-    CustomButton,
-    CustomDate,
-} from "../CustomComponents";
+import { CustomInput, CustomButton } from "../CustomComponents";
 import axios from "axios";
 const ModalMembers = ({ getMembers }) => {
     const [open, setOpen] = useState(false);
@@ -28,7 +20,7 @@ const ModalMembers = ({ getMembers }) => {
     };
     const postMember = async (member) => {
         try {
-            let request = await axios.post(`http://localhost:3000/member`, {
+            await axios.post(`http://localhost:3000/member`, {
                 member: member,
             });
             getMembers();

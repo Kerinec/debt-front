@@ -10,11 +10,11 @@ import {
     CustomButton,
     CustomDate,
 } from "../CustomComponents";
-const ModalTransaction = () => {
+const ModalTransaction = ({ dataMembers }) => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const members = ["Pedrito", "Paquito", "Juanito", "Sebasito", "Jaimito"];
+    console.log(dataMembers, "member,modal");
     return (
         <div>
             <CustomButton onClick={handleOpen} label={"Añadir Transacción"} />
@@ -32,28 +32,30 @@ const ModalTransaction = () => {
                         </IconButton>
                     </div>
                     <div className="debt-person-container">
-                        <div className="logo-person">C</div>
-                        <CustomInputSelect data={members} />
+                        <CustomInputSelect data={dataMembers} />
                     </div>
                     <CustomInput label={"Cantidad"} textAlign={"right"} />
                     <div className="debt-split-persons-title">Para quién</div>
                     <div className="split-debt-container">
-                        <div className="split-debt">
-                            <div className="logo-person">C</div>
-                            <div className="split-info-amount">
-                                <div className="person">Carlos</div>
-                                <div className="amount">0€</div>
-                            </div>
-                            <Checkbox />
-                        </div>
-                        <div className="split-debt">
-                            <div className="logo-person">S</div>
-                            <div className="split-info-amount">
-                                <div className="person">Sebas</div>
-                                <div className="amount">0€</div>
-                            </div>
-                            <Checkbox />
-                        </div>
+                        {dataMembers.map((member) => {
+                            return (
+                                <div
+                                    className="split-debt"
+                                    key={member.name + "split-debt"}
+                                >
+                                    <div className="logo-person">
+                                        {member.name[0]}
+                                    </div>
+                                    <div className="split-info-amount">
+                                        <div className="person">
+                                            {member.name}
+                                        </div>
+                                        <div className="amount">0€</div>
+                                    </div>
+                                    <Checkbox />
+                                </div>
+                            );
+                        })}
                     </div>
                     <CustomInput label={"Asunto"} />
                     <CustomDate />
