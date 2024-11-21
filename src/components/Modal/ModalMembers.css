@@ -1,0 +1,12 @@
+.member-form-container{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #424242;
+    color: #fff;
+    padding: 20px 20px;
+    gap: 10px;
+  }

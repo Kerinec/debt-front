@@ -1,11 +1,24 @@
 import "./App.css";
 import CustomTabs from "./components/CustomTabs/CustomTabs";
-
+import Transaction from "./components/Transaction/Transaction";
+import ModalTransaction from "./components/Modal/ModalTransaction";
+import Members from "./components/Members/Members";
+import axios from "axios";
+import { useEffect, useState } from "react";
 function App() {
+    const [dataMembers, setDataMembers] = useState([]);
+
+    useEffect(() => {
+        getMembers();
+    }, []);
+    const getMembers = async () => {
+        let response = await axios.get(`http://localhost:3000/members`);
+        setDataMembers(response.data);
+    };
     const dataTabs = [
         {
             label: "Transaccion",
-            content: "Informacion de las transacciones",
+            content: <Transaction />,
         },
         {
             label: "Deudas",
@@ -13,7 +26,7 @@ function App() {
         },
         {
             label: "Miembros",
-            content: "Informacion de las Miembros",
+            content: <Members data={dataMembers} getMembers={getMembers}/>,
         },
         {
             label: "Permisos",
@@ -29,9 +42,7 @@ function App() {
         <>
             <header>
                 <div className="logo">Pasta Gansa</div>
-                <button className="transaction-button">
-                    Añadir transacción
-                </button>
+                <ModalTransaction />
                 <div className="user-info">
                     <div className="user-name">Carlos Kerinec</div>
                     <div className="user-email">carloskerinec@gmail.com</div>
@@ -59,42 +70,7 @@ function App() {
                         </div>
                     </div>
                 </div>
-                <CustomTabs data={dataTabs}/>
-                <div className="transactions">
-                    <div className="transaction-month">Octubre 2024</div>
-                    <div className="transaction-list">
-                        <div className="transaction-container">
-                            <div className="transaction-date">
-                                29 de octubre de 2024 13:00
-                            </div>
-                            <div className="transaction-description">Juego</div>
-                            <div className="transaction-user">
-                                Sebastián pagó
-                            </div>
-                            <div className="transaction-amount">80 €</div>
-                        </div>
-                        <div className="transaction-container">
-                            <div className="transaction-date">
-                                28 de octubre de 2024 15:00
-                            </div>
-                            <div className="transaction-description">
-                                Pastel
-                            </div>
-                            <div className="transaction-user">Carlos pagó</div>
-                            <div className="transaction-amount">70 €</div>
-                        </div>
-                        <div className="transaction-container">
-                            <div className="transaction-date">
-                                27 de octubre de 2024 19:00
-                            </div>
-                            <div className="transaction-description">Silla</div>
-                            <div className="transaction-user">
-                                Sebastián pagó
-                            </div>
-                            <div className="transaction-amount">40 €</div>
-                        </div>
-                    </div>
-                </div>
+                <CustomTabs data={dataTabs} />
             </main>
         </>
     );

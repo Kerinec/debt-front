@@ -102,6 +102,7 @@ header {
 }
 
 .transaction-list {
+
     background-color: #242424;
     border-radius: 5px;
     padding: 10px;
@@ -120,4 +121,7 @@ header {
 .transaction-amount {
     flex: 1;
     color: rgb(183, 182, 182);
+}
+.transaction-month{
+    padding-top: 20px;
 }
