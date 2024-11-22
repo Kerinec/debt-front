@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./ModalTransaction.css";
 import Modal from "@mui/material/Modal";
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -12,11 +12,51 @@ import {
 } from "../CustomComponents";
 const ModalTransaction = ({ dataMembers }) => {
     const [open, setOpen] = useState(false);
-    const [formData, setFormData] = useState({ amount: undefined });
+    const [formData, setFormData] = useState({
+        amount: 0,
+        data: [],
+    });
+    useEffect(() => {
+        let dataTransMemb = dataMembers.reduce((acumulador, element) => {
+            acumulador.push({
+                id: element.id,
+                name: element.name,
+                amountMember: 0,
+                checked: false,
+            });
+
+            return acumulador;
+        }, []);
+        setFormData({ ...formData, data: dataTransMemb });
+    }, [dataMembers]);
+
     const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleClose = () => {
+        setFormData({
+            amount: 0,
+        });
+        setOpen(false);
+    };
     const handleChange = (e) => {
-        setFormData({ amount: e.target.value });
+        setFormData({ ...formData, amount: e.target.value });
+    };
+    const handleChangeCheck = (e) => {
+        let newArrayData = formData.data.reduce(
+            (acumulador, element, index) => {
+                if (index === parseInt(e.target.name)) {
+                    acumulador.push({
+                        ...element,
+                        checked: e.target.checked,
+                    });
+                    return acumulador;
+                } else {
+                    acumulador.push(element);
+                    return acumulador;
+                }
+            },
+            []
+        );
+        setFormData({ ...formData, data: newArrayData });
     };
     return (
         <div>
@@ -44,7 +84,7 @@ const ModalTransaction = ({ dataMembers }) => {
                     />
                     <div className="debt-split-persons-title">Para quién</div>
                     <div className="split-debt-container">
-                        {dataMembers.map((member) => {
+                        {formData.data.map((member, index) => {
                             return (
                                 <div
                                     className="split-debt"
@@ -57,9 +97,14 @@ const ModalTransaction = ({ dataMembers }) => {
                                         <div className="person">
                                             {member.name}
                                         </div>
-                                        <div className="amount">0€</div>
+                                        <div className="amount">
+                                            {member.amountMember}€
+                                        </div>
                                     </div>
-                                    <Checkbox />
+                                    <Checkbox
+                                        onChange={handleChangeCheck}
+                                        name={`${index}`}
+                                    />
                                 </div>
                             );
                         })}
