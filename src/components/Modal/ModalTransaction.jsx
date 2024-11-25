@@ -17,7 +17,19 @@ const ModalTransaction = ({ dataMembers }) => {
         data: [],
     });
     useEffect(() => {
-        let dataTransMemb = dataMembers.reduce((acumulador, element) => {
+        setFormData({ ...formData, data: generateMemberData() });
+    }, [dataMembers]);
+
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => {
+        setFormData({
+            amount: 0,
+            data: generateMemberData(),
+        });
+        setOpen(false);
+    };
+    const generateMemberData = () => {
+        return dataMembers.reduce((acumulador, element) => {
             acumulador.push({
                 id: element.id,
                 name: element.name,
@@ -27,15 +39,6 @@ const ModalTransaction = ({ dataMembers }) => {
 
             return acumulador;
         }, []);
-        setFormData({ ...formData, data: dataTransMemb });
-    }, [dataMembers]);
-
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => {
-        setFormData({
-            amount: 0,
-        });
-        setOpen(false);
     };
     const handleChange = (e) => {
         setFormData({ ...formData, amount: e.target.value });
@@ -56,7 +59,20 @@ const ModalTransaction = ({ dataMembers }) => {
             },
             []
         );
-        setFormData({ ...formData, data: newArrayData });
+        const filteredCheck = newArrayData.filter((element) => element.checked);
+        const updateData = newArrayData.map((element) => ({
+            ...element,
+            amountMember: element.checked
+                ? debtCalculation(filteredCheck.length)
+                : 0,
+        }));
+        setFormData({ ...formData, data: updateData });
+    };
+
+    const debtCalculation = (members) => {
+        if (members === 0) return 0;
+        let result = formData.amount / members;
+        return parseFloat(result.toFixed(2));
     };
     return (
         <div>

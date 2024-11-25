@@ -3,6 +3,7 @@ import TextField from "@mui/material/TextField";
 import { ThemeProvider } from "@emotion/react";
 
 const CustomInput = (props) => {
+    const { textAlign, ...rest } = props;
     const theme = createTheme({
         components: {
             MuiTextField: {
@@ -17,9 +18,7 @@ const CustomInput = (props) => {
                         "& .MuiInputBase-input": {
                             color: "#fff",
                             textAlign:
-                                props.textAlign === "right"
-                                    ? props.textAlign
-                                    : "left",
+                                textAlign === "right" ? textAlign : "left",
                         },
                         "& label.Mui-focused": {
                             color: "var(--color)",
@@ -46,7 +45,7 @@ const CustomInput = (props) => {
     });
     return (
         <ThemeProvider theme={theme}>
-            <TextField {...props} />
+            <TextField {...rest} />
         </ThemeProvider>
     );
 };
