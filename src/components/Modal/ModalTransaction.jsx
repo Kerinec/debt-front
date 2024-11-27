@@ -10,11 +10,16 @@ import {
     CustomButton,
     CustomDate,
 } from "../CustomComponents";
+import dayjs from "dayjs";
+import axios from "axios";
 const ModalTransaction = ({ dataMembers }) => {
     const [open, setOpen] = useState(false);
     const [formData, setFormData] = useState({
+        member: "",
         amount: 0,
         data: [],
+        subject: "",
+        date: dayjs().format(),
     });
     useEffect(() => {
         setFormData({ ...formData, data: generateMemberData() });
@@ -41,7 +46,11 @@ const ModalTransaction = ({ dataMembers }) => {
         }, []);
     };
     const handleChange = (e) => {
-        setFormData({ ...formData, amount: e.target.value });
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+    const handleChangeDay = (e) => {
+        let day = dayjs(e);
+        setFormData({ ...formData, date: day.format() });
     };
     const handleChangeCheck = (e) => {
         let newArrayData = formData.data.reduce(
@@ -68,7 +77,16 @@ const ModalTransaction = ({ dataMembers }) => {
         }));
         setFormData({ ...formData, data: updateData });
     };
-
+    const handleClick = () => {
+        postTransaction();
+    };
+    const postTransaction = async () => {
+        axios.post(
+            await axios.post(`http://localhost:3000/addTransaction`, {
+                data: formData,
+            })
+        );
+    };
     const debtCalculation = (members) => {
         if (members === 0) return 0;
         let result = formData.amount / members;
@@ -91,12 +109,17 @@ const ModalTransaction = ({ dataMembers }) => {
                         </IconButton>
                     </div>
                     <div className="debt-person-container">
-                        <CustomInputSelect data={dataMembers} />
+                        <CustomInputSelect
+                            data={dataMembers}
+                            handleChange={handleChange}
+                            formData={formData}
+                        />
                     </div>
                     <CustomInput
                         label={"Cantidad"}
                         textAlign={"right"}
                         onChange={handleChange}
+                        name={"amount"}
                     />
                     <div className="debt-split-persons-title">Para quién</div>
                     <div className="split-debt-container">
@@ -125,8 +148,19 @@ const ModalTransaction = ({ dataMembers }) => {
                             );
                         })}
                     </div>
-                    <CustomInput label={"Asunto"} />
-                    <CustomDate />
+                    <CustomInput
+                        label={"Asunto"}
+                        name={"subject"}
+                        onChange={handleChange}
+                    />
+                    <CustomDate
+                        handleChangeDay={handleChangeDay}
+                        data={formData}
+                    />
+                    <CustomButton
+                        label={"Añadir Gasto"}
+                        onClick={handleClick}
+                    />
                 </div>
             </Modal>
         </div>

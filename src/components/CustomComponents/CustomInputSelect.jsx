@@ -6,8 +6,7 @@ import InputLabel from "@mui/material/InputLabel";
 import { createTheme } from "@mui/material";
 import { useState } from "react";
 import PropTypes from "prop-types";
-const CustomInputSelect = ({ data }) => {
-    const [dataMember, setDataMember] = useState("");
+const CustomInputSelect = ({ data, handleChange, formData }) => {
 
     const theme = createTheme({
         components: {
@@ -48,23 +47,21 @@ const CustomInputSelect = ({ data }) => {
             },
         },
     });
-    const handleChange = (e) => {
-        setDataMember(e.target.value);
-    };
     return (
         <>
-            {dataMember !== "" ? (
-                <div className="logo-person">{dataMember[0]}</div>
+            {formData.member !== "" ? (
+                <div className="logo-person">{formData.member[0]}</div>
             ) : null}
             <ThemeProvider theme={theme}>
                 <FormControl>
                     <InputLabel id="select-label">Pagó</InputLabel>
                     <Select
-                        value={dataMember}
+                        value={formData.member}
                         label={"pagó"}
                         labelId="select-label"
                         onChange={handleChange}
                         sx={{ minWidth: 120 }}
+                        name={"member"}
                     >
                         {data.map((member) => {
                             return (

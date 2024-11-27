@@ -6,7 +6,7 @@ import { createTheme } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
 import dayjs from "dayjs";
 
-const CustomDate = () => {
+const CustomDate = ({ handleChangeDay, data }) => {
     const theme = createTheme({
         components: {
             MuiTextField: {
@@ -56,7 +56,11 @@ const CustomDate = () => {
             <ThemeProvider theme={theme}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={["DatePicker"]}>
-                        <DatePicker label="Fecha" defaultValue={dayjs()} />
+                        <DatePicker
+                            label="Fecha"
+                            defaultValue={dayjs(data.date)}
+                            onChange={handleChangeDay}
+                        />
                     </DemoContainer>
                 </LocalizationProvider>
             </ThemeProvider>
