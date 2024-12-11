@@ -81,11 +81,19 @@ const ModalTransaction = ({ dataMembers }) => {
         postTransaction();
     };
     const postTransaction = async () => {
-        axios.post(
-            await axios.post(`http://localhost:3000/addTransaction`, {
-                data: formData,
-            })
-        );
+        const payLoad = {
+            amount: formData.amount,
+            description: formData.subject,
+            date: formData.date,
+            id_origin: formData.member,
+            id_destination: formData.data.reduce((acc, element) => {
+                if (element.checked) {
+                    acc.push(element.id);
+                }
+                return acc;
+            }, []),
+        };
+        await axios.post(`http://localhost:3000/addTransaction`, payLoad);
     };
     const debtCalculation = (members) => {
         if (members === 0) return 0;

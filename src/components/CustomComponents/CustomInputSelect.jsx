@@ -66,7 +66,7 @@ const CustomInputSelect = ({ data, handleChange, formData }) => {
                         {data.map((member) => {
                             return (
                                 <MenuItem
-                                    value={member.name}
+                                    value={member.id}
                                     key={member.name + "member"}
                                 >
                                     {member.name}
