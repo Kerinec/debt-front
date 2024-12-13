@@ -1,19 +1,42 @@
-const TransactionItem = () => {
+import Tooltip from "@mui/material/Tooltip";
+const TransactionItem = ({ dataTransactions }) => {
+    const completeDate = new Intl.DateTimeFormat("es-ES", {
+        dateStyle: "full",
+        timeStyle: "short",
+    });
     return (
         <div className="transaction-item-container">
-            <div className="icon-origin">S</div>
+            <Tooltip title={dataTransactions.name_origin}>
+                <div className="icon-origin">
+                    {dataTransactions.name_origin[0]}
+                </div>
+            </Tooltip>
             <div className="info-transaction">
-                <div className="info-subject">Gasto</div>
-                <div className="info-date">8 de octubre de 2024 19:03</div>
+                <div className="info-subject">
+                    {dataTransactions.description}
+                </div>
+                <div className="info-date">
+                    {completeDate.format(new Date(dataTransactions.date))}
+                </div>
                 <div className="info-member-origin">
-                    <span>Sebastian</span> pagó
+                    <span>{dataTransactions.name_origin}</span> pagó
                 </div>
             </div>
             <div className="info-debt">
-                <div className="red-text debt-transaction">70 €</div>
+                <div className="red-text debt-transaction">
+                    {dataTransactions.amount} €
+                </div>
                 <div className="icon-destination-container">
-                    <span className="icon-destination">C</span>
-                    <span className="icon-destination">D</span>
+                    {dataTransactions.name_destination.map((name) => (
+                        <Tooltip
+                            title={name.name}
+                            key={name.id + "destination"}
+                        >
+                            <span className="icon-destination">
+                                {name.name[0]}
+                            </span>
+                        </Tooltip>
+                    ))}
                 </div>
             </div>
         </div>
