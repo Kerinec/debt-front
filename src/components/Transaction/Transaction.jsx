@@ -1,7 +1,7 @@
 import axios from "axios";
-import { elements } from "chart.js";
 import { useEffect, useState } from "react";
-
+import "./Transaction.css";
+import TransactionItem from "./TransactionItem";
 const Transaction = () => {
     const [transactionData, setTransactionData] = useState([]);
     useEffect(() => {
@@ -12,36 +12,37 @@ const Transaction = () => {
         let response = await axios.get(`http://localhost:3000/transactions`);
         setTransactionData(response.data);
     };
+    const calculateDebtMonth = (monthTransactions) => {
+        return monthTransactions.reduce((acc, amount) => {
+            return acc + parseInt(amount.amount);
+        },0);
+    };
+
     return (
-        <div className="transactions">
-            {transactionData.map((month, index) => {
+        <div className="transaction-list-container">
+            {transactionData.map((data, index) => {
                 return (
-                    <div className="month-container" key={"month" + index}>
-                        <div className="transaction-month">{month.date}</div>
-                        <div className="transaction-list">
-                            {month.transactions.map((element, i) => (
-                                <div
-                                    className="transaction-container"
-                                    key={element.id + "container" + i}
-                                >
-                                    <div className="transaction-date">
-                                        {new Date(
-                                            element.date
-                                        ).toLocaleString()}
-                                    </div>
-                                    <div className="transaction-description">
-                                        {element.description}
-                                    </div>
-                                    <div className="transaction-user">
-                                        {`${element.nombre_origen} pagó a ${element.nombre_destino}`}
-                                    </div>
-                                    <div className="transaction-amount">
-                                        {`${element.amount} €`}
-                                    </div>
+                    <>
+                        <div className="header-transaction">
+                            <div className="transaction-month">{data.date}</div>
+                            <div className="transaction-expend">
+                                <div className="total-expend">
+                                    <span className="red-text">
+                                        {calculateDebtMonth(data.transactions)} €
+                                    </span>{" "}
+                                    total gastado
                                 </div>
-                            ))}
+                                <span>|</span>
+                                <div className="total-transaction">
+                                    <span className="red-text">{data.transactions.length}</span> gastos
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                        <span className="border-bottom"></span>
+                    {data.transactions.map((element)=>{
+                       return <TransactionItem dataTransactions={element} key={element.id}/>
+                    })}
+                    </>
                 );
             })}
         </div>

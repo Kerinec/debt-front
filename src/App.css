@@ -96,32 +96,6 @@ header {
     color: #fff;
     font-weight: 700;
 }
-
-.transactions {
-    padding: 20px;
-}
-
-.transaction-list {
-
-    background-color: #242424;
-    border-radius: 5px;
-    padding: 10px;
-}
-
-.transaction-container {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 0px;
-    border-bottom: 1px solid #444;
-}
-
-.transaction-date,
-.transaction-description,
-.transaction-user,
-.transaction-amount {
-    flex: 1;
-    color: rgb(183, 182, 182);
-}
-.transaction-month{
-    padding-top: 20px;
+.red-text{
+    color: #ffa3a3;
 }
