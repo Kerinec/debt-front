@@ -28,8 +28,11 @@ const ModalTransaction = ({ dataMembers }) => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => {
         setFormData({
+            member: "",
             amount: 0,
             data: generateMemberData(),
+            subject: "",
+            date: dayjs().format(),
         });
         setOpen(false);
     };

@@ -4,10 +4,8 @@ import { ThemeProvider } from "@emotion/react";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import { createTheme } from "@mui/material";
-import { useState } from "react";
 import PropTypes from "prop-types";
 const CustomInputSelect = ({ data, handleChange, formData }) => {
-
     const theme = createTheme({
         components: {
             MuiSelect: {
