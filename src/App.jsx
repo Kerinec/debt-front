@@ -43,7 +43,9 @@ function App() {
         <StateCompo>
             <>
                 <header>
-                    <div className="logo">Pasta Gansa</div>
+                    <a href="http://localhost:5173/">
+                        <div className="logo">Pasta Gansa</div>
+                    </a>
                     <ModalTransaction dataMembers={dataMembers} />
                     <div className="user-info">
                         <div className="user-name">Carlos Kerinec</div>
