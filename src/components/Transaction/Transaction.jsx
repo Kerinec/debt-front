@@ -1,17 +1,11 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import "./Transaction.css";
 import TransactionItem from "./TransactionItem";
-const Transaction = () => {
-    const [transactionData, setTransactionData] = useState([]);
-    useEffect(() => {
-        getTransactions();
-    }, []);
+import { transactionContext } from "../../context/transactionContext";
 
-    const getTransactions = async () => {
-        let response = await axios.get(`http://localhost:3000/transactions`);
-        setTransactionData(response.data);
-    };
+const Transaction = () => {
+    const { transactionData } = useContext(transactionContext)
     const calculateDebtMonth = (monthTransactions) => {
         return monthTransactions.reduce((acc, amount) => {
             return acc + parseInt(amount.amount);
