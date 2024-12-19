@@ -1,5 +1,4 @@
-import PropTypes, { element } from "prop-types";
-import ModalMembers from "../Modal/ModalMembers";
+import PropTypes from "prop-types";
 import "./Members.css";
 import MembersItem from "./MembersItem";
 import { useContext } from "react";
@@ -26,16 +25,16 @@ const Members = ({ data, getMembers }) => {
         return expend;
     };
     const debtMembers = (idMember) => {
-        let calcule = 0
+        let calcule = 0;
         const debt = transactionData.reduce((acc, trans) => {
             trans.transactions.forEach((element) => {
                 if (element.id_destination.includes(idMember)) {
-                    if(element.id_origin === idMember){
-                      calcule = element.amount / element.id_destination.length
-                        acc += calcule * element.id_destination.length -1
+                    if (element.id_origin === idMember) {
+                        calcule =
+                            element.amount / element.id_destination.length;
+                        acc += calcule * element.id_destination.length - 1;
                     }
-                    acc += (-(element.amount / element.id_destination.length))
-
+                    acc += -(element.amount / element.id_destination.length);
                 }
             });
             return acc;

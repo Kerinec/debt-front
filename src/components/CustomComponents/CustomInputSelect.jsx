@@ -5,7 +5,8 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import { createTheme } from "@mui/material";
 import PropTypes from "prop-types";
-const CustomInputSelect = ({ data, handleChange, formData }) => {
+import FormHelperText from '@mui/material/FormHelperText';
+const CustomInputSelect = ({ data, handleChange, formData, errors }) => {
     const theme = createTheme({
         components: {
             MuiSelect: {
@@ -51,7 +52,7 @@ const CustomInputSelect = ({ data, handleChange, formData }) => {
                 <div className="logo-person">{formData.member[0]}</div>
             ) : null}
             <ThemeProvider theme={theme}>
-                <FormControl>
+                <FormControl error={errors.error}>
                     <InputLabel id="select-label">Pagó</InputLabel>
                     <Select
                         value={formData.member}
@@ -72,6 +73,7 @@ const CustomInputSelect = ({ data, handleChange, formData }) => {
                             );
                         })}
                     </Select>
+                    <FormHelperText>{errors.text}</FormHelperText>
                 </FormControl>
             </ThemeProvider>
         </>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./ModalTransaction.css";
 import Modal from "@mui/material/Modal";
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -12,6 +12,7 @@ import {
 } from "../CustomComponents";
 import dayjs from "dayjs";
 import axios from "axios";
+import { transactionContext } from "../../context/transactionContext";
 const ModalTransaction = ({ dataMembers }) => {
     const [open, setOpen] = useState(false);
     const [formData, setFormData] = useState({
@@ -21,6 +22,29 @@ const ModalTransaction = ({ dataMembers }) => {
         subject: "",
         date: dayjs().format(),
     });
+    const [errors, setErrors] = useState({
+        select: {
+            error: false,
+            text: "",
+        },
+        inputAmount: {
+            error: false,
+            text: "",
+        },
+        check: {
+            error: false,
+            text: "",
+        },
+        inputSubject: {
+            error: false,
+            text: "",
+        },
+        inputDate: {
+            error: false,
+            text: "",
+        },
+    });
+    const { getTransactions } = useContext(transactionContext);
     useEffect(() => {
         setFormData({ ...formData, data: generateMemberData() });
     }, [dataMembers]);
@@ -33,6 +57,28 @@ const ModalTransaction = ({ dataMembers }) => {
             data: generateMemberData(),
             subject: "",
             date: dayjs().format(),
+        });
+        setErrors({
+            select: {
+                error: false,
+                text: "",
+            },
+            inputAmount: {
+                error: false,
+                text: "",
+            },
+            check: {
+                error: false,
+                text: "",
+            },
+            inputSubject: {
+                error: false,
+                text: "",
+            },
+            inputDate: {
+                error: false,
+                text: "",
+            },
         });
         setOpen(false);
     };
@@ -80,8 +126,86 @@ const ModalTransaction = ({ dataMembers }) => {
         }));
         setFormData({ ...formData, data: updateData });
     };
-    const handleClick = () => {
-        postTransaction();
+    const resetError = (obj, property) => {
+        return (obj[property] = {
+            error: false,
+            text: "",
+        });
+    };
+    const validateForm = () => {
+        const filteredCheck = formData.data.filter(
+            (element) => element.checked
+        );
+        let deltaErrors = { ...errors };
+
+        // Select validation
+        if (formData.member === "") {
+            deltaErrors.select = {
+                error: true,
+                text: "* Este campo no puede estar vacío",
+            };
+        } else {
+            resetError(deltaErrors, "select");
+        }
+
+        // Input Amount validation
+        if (formData.amount === 0) {
+            deltaErrors.inputAmount = {
+                error: true,
+                text: "* Este campo no puede estar vacío",
+            };
+        } else if (isNaN(parseFloat(formData.amount))) {
+            deltaErrors.inputAmount = {
+                error: true,
+                text: "* Este campo solo permite números",
+            };
+        } else {
+            resetError(deltaErrors, "inputAmount");
+        }
+
+        // checkBoxes validation
+        if (formData.data.every((check) => !check.checked)) {
+            deltaErrors.check = {
+                error: true,
+                text: "* Selecciona mínimo a un miembro",
+            };
+        } else if (filteredCheck.length === 1) {
+            if (filteredCheck[0].id === formData.member) {
+                deltaErrors.check = {
+                    error: true,
+                    text: "* El pagador no puede ser el único deudor",
+                };
+            }
+        } else {
+            resetError(deltaErrors, "check");
+        }
+
+        //Subject validation
+        if (formData.subject === "") {
+            deltaErrors.inputSubject = {
+                error: true,
+                text: "* Este campo no puede estar vacío",
+            };
+        } else if (formData.subject.length < 3) {
+            deltaErrors.inputSubject = {
+                error: true,
+                text: "* Tiene que contener más de 3 caracteres",
+            };
+        } else {
+            resetError(deltaErrors, "inputSubject");
+        }
+        setErrors(deltaErrors);
+    };
+    const handleClick = async () => {
+        validateForm();
+        let formHasErrors = Object.keys(errors).every((element) => {
+            return !errors[element].error;
+        });
+        if (formHasErrors) {
+            await postTransaction();
+            await getTransactions();
+            handleClose();
+        }
     };
     const postTransaction = async () => {
         const payLoad = {
@@ -124,6 +248,7 @@ const ModalTransaction = ({ dataMembers }) => {
                             data={dataMembers}
                             handleChange={handleChange}
                             formData={formData}
+                            errors={errors.select}
                         />
                     </div>
                     <CustomInput
@@ -131,38 +256,63 @@ const ModalTransaction = ({ dataMembers }) => {
                         textAlign={"right"}
                         onChange={handleChange}
                         name={"amount"}
+                        errors={errors.inputAmount}
                     />
-                    <div className="debt-split-persons-title">Para quién</div>
-                    <div className="split-debt-container">
-                        {formData.data.map((member, index) => {
-                            return (
-                                <div
-                                    className="split-debt"
-                                    key={member.name + "split-debt"}
-                                >
-                                    <div className="logo-person">
-                                        {member.name[0]}
-                                    </div>
-                                    <div className="split-info-amount">
-                                        <div className="person">
-                                            {member.name}
-                                        </div>
-                                        <div className="amount">
-                                            {member.amountMember}€
-                                        </div>
-                                    </div>
-                                    <Checkbox
-                                        onChange={handleChangeCheck}
-                                        name={`${index}`}
-                                    />
+                    <div
+                        className={
+                            errors.check.error
+                                ? "debt-split-container border-error"
+                                : "debt-split-container"
+                        }
+                    >
+                        <div className="debt-split-persons-container">
+                            <div
+                                className={
+                                    errors.check.error
+                                        ? "debt-split-persons-title color-error"
+                                        : "debt-split-persons-title"
+                                }
+                            >
+                                Para quién
+                            </div>
+                            {errors.check.error ? (
+                                <div className="check-error color-error">
+                                    {errors.check.text}
                                 </div>
-                            );
-                        })}
+                            ) : null}
+                        </div>
+                        <div className="split-debt-container">
+                            {formData.data.map((member, index) => {
+                                return (
+                                    <div
+                                        className="split-debt"
+                                        key={member.name + "split-debt"}
+                                    >
+                                        <div className="logo-person">
+                                            {member.name[0]}
+                                        </div>
+                                        <div className="split-info-amount">
+                                            <div className="person">
+                                                {member.name}
+                                            </div>
+                                            <div className="amount">
+                                                {member.amountMember}€
+                                            </div>
+                                        </div>
+                                        <Checkbox
+                                            onChange={handleChangeCheck}
+                                            name={`${index}`}
+                                        />
+                                    </div>
+                                );
+                            })}
+                        </div>
                     </div>
                     <CustomInput
                         label={"Asunto"}
                         name={"subject"}
                         onChange={handleChange}
+                        errors={errors.inputSubject}
                     />
                     <CustomDate
                         handleChangeDay={handleChangeDay}

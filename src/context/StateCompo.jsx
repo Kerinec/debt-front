@@ -1,4 +1,3 @@
-import React, { Children } from "react";
 import { transactionContext } from "./transactionContext";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -14,7 +13,7 @@ const StateCompo = ({ children }) => {
     };
     return (
         <transactionContext.Provider
-            value={{ transactionData, setTransactionData }}
+            value={{ transactionData, setTransactionData, getTransactions }}
         >
             {children}
         </transactionContext.Provider>

@@ -3,7 +3,7 @@ import TextField from "@mui/material/TextField";
 import { ThemeProvider } from "@emotion/react";
 
 const CustomInput = (props) => {
-    const { textAlign, ...rest } = props;
+    const { textAlign, errors = {}, ...rest } = props;
     const theme = createTheme({
         components: {
             MuiTextField: {
@@ -45,7 +45,11 @@ const CustomInput = (props) => {
     });
     return (
         <ThemeProvider theme={theme}>
-            <TextField {...rest} />
+            <TextField
+                {...rest}
+                error={errors?.error}
+                helperText={errors?.text}
+            />
         </ThemeProvider>
     );
 };
