@@ -1,8 +1,8 @@
-h2{
+h2 {
     margin: 0;
     padding: 0;
-  }
-  .debt-form-container{
+}
+.debt-form-container {
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -13,27 +13,27 @@ h2{
     color: #fff;
     padding: 20px 20px;
     gap: 10px;
-  }
-  .debt-header-container{
+}
+.debt-header-container {
     width: 100%;
     display: flex;
     justify-content: space-between;
-  }
-  .icon{
+}
+.icon {
     color: #fff;
-  }
-  .debt-title-who-paid{
+}
+.debt-title-who-paid {
     padding-left: 10px;
-  }
-  .debt-split-persons-title{
+}
+.debt-split-persons-title {
     padding-left: 10px;
-  }
-  .debt-person-container{
+}
+.debt-person-container {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-  }
-  .logo-person{
+}
+.logo-person {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -42,29 +42,50 @@ h2{
     height: 30px;
     border-radius: 50%;
     text-align: center;
-  }
-  .split-debt-container{
+}
+.debt-split-container{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background-color: #333;
+  padding: 10px;
+  border: #fff 1px solid  ;
+  border-radius: 4px;
+}
+.split-debt-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
-  }
-  .split-debt{
-  display: flex;
-  justify-content: space-between;
-  
-  }
-  .split-info-amount{
+}
+.split-debt {
+    display: flex;
+    justify-content: space-between;
+}
+.split-info-amount {
     display: flex;
     flex-direction: column;
     gap: 5px;
-  }
-  .debt-description-title{
+}
+.debt-description-title {
     padding-left: 10px;
-  }
-  .debt-date-title{
+}
+.debt-date-title {
     padding-left: 10px;
-  }
-  .test{
+}
+.test {
     color: #fff;
-  }
-  
+}
+.color-error {
+  color: #d32f2f;
+}
+.border-error{
+  border-color: #d32f2f;
+}
+.check-error {
+    font-size: 13px;
+}
+.debt-split-persons-container{
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
