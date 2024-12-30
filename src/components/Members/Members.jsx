@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { transactionContext } from "../../context/transactionContext";
 import ModalMembers from "../Modal/ModalMembers";
 const Members = () => {
-    const { transactionData, dataMembers} = useContext(transactionContext);
+    const { transactionData, dataMembers } = useContext(transactionContext);
 
     const expendMembers = (idMember) => {
         const expend = transactionData.reduce((acc, trans) => {
@@ -26,18 +26,23 @@ const Members = () => {
         return expend;
     };
     const debtMembers = (idMember) => {
-        let calcule = 0;
         const debt = transactionData.reduce((acc, trans) => {
             trans.transactions.forEach((element) => {
                 if (element.id_destination.includes(idMember)) {
                     if (element.id_origin === idMember) {
-                        calcule =
+                        let calcule =
                             element.amount / element.id_destination.length;
                         acc += calcule * element.id_destination.length - 1;
+                    } else {
+                        acc += -(
+                            element.amount / element.id_destination.length
+                        );
                     }
-                    acc += -(element.amount / element.id_destination.length);
+                } else if (element.id_origin === idMember) {
+                    acc += parseInt(element.amount);
                 }
             });
+
             return acc;
         }, 0);
         return parseFloat(debt.toFixed(2));
