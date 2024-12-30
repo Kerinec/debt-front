@@ -1,11 +1,11 @@
 import Tooltip from "@mui/material/Tooltip";
-const TransactionItem = ({ dataTransactions }) => {
+const TransactionItem = ({ dataTransactions, onClick }) => {
     const completeDate = new Intl.DateTimeFormat("es-ES", {
         dateStyle: "full",
         timeStyle: "short",
     });
     return (
-        <div className="transaction-item-container">
+        <div className="transaction-item-container" onClick={onClick}>
             <Tooltip title={dataTransactions.name_origin}>
                 <div className="icon-origin">
                     {dataTransactions.name_origin[0]}

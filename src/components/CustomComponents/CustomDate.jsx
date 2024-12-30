@@ -58,8 +58,9 @@ const CustomDate = ({ handleChangeDay, data }) => {
                     <DemoContainer components={["DatePicker"]}>
                         <DatePicker
                             label="Fecha"
-                            defaultValue={dayjs(data.date)}
+                            value={dayjs(data.date)}
                             onChange={handleChangeDay}
+                            
                         />
                     </DemoContainer>
                 </LocalizationProvider>

@@ -3,8 +3,9 @@ import "./Members.css";
 import MembersItem from "./MembersItem";
 import { useContext } from "react";
 import { transactionContext } from "../../context/transactionContext";
-const Members = ({ data, getMembers }) => {
-    const { transactionData } = useContext(transactionContext);
+import ModalMembers from "../Modal/ModalMembers";
+const Members = () => {
+    const { transactionData, dataMembers} = useContext(transactionContext);
 
     const expendMembers = (idMember) => {
         const expend = transactionData.reduce((acc, trans) => {
@@ -45,7 +46,7 @@ const Members = ({ data, getMembers }) => {
         <>
             <div className="members-list-container">
                 <div className="header-member">Miembros</div>
-                {data.map((dataMember) => {
+                {dataMembers.map((dataMember) => {
                     return (
                         <MembersItem
                             dataMember={dataMember}
@@ -56,11 +57,9 @@ const Members = ({ data, getMembers }) => {
                     );
                 })}
             </div>
-            {/* <ModalMembers getMembers={getMembers}/> */}
+            <ModalMembers />
         </>
     );
 };
-Members.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
+
 export default Members;
