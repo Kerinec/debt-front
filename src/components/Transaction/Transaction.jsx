@@ -1,9 +1,11 @@
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import "./Transaction.css";
 import TransactionItem from "./TransactionItem";
 import { transactionContext } from "../../context/transactionContext";
-
-const Transaction = () => {
+import ModalTransaction from "../Modal/ModalTransaction";
+const Transaction = ({ editTransaction, setEditTransaction }) => {
+    const [openEdit, setOpenEdit] = useState(false);
+    const [selectedTransaction, setSelectedTransaction] = useState({});
     const { transactionData } = useContext(transactionContext);
     const calculateDebtMonth = (monthTransactions) => {
         return monthTransactions.reduce((acc, amount) => {
@@ -11,8 +13,21 @@ const Transaction = () => {
         }, 0);
     };
 
+    const handleClick = (transaction) => {
+        setSelectedTransaction(transaction);
+        setOpenEdit(true);
+    };
+
     return (
         <div className="transaction-list-container">
+            {Object.keys(selectedTransaction).length > 0 && (
+                <ModalTransaction
+                    open={openEdit}
+                    setOpen={setOpenEdit}
+                    isEdit={true}
+                    selectedTransaction={selectedTransaction}
+                />
+            )}
             {transactionData.map((data, index) => {
                 return (
                     <>
@@ -41,6 +56,9 @@ const Transaction = () => {
                                 <TransactionItem
                                     dataTransactions={element}
                                     key={element.id}
+                                    onClick={() => {
+                                        handleClick(element);
+                                    }}
                                 />
                             );
                         })}

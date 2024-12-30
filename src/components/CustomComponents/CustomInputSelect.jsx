@@ -4,8 +4,8 @@ import { ThemeProvider } from "@emotion/react";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import { createTheme } from "@mui/material";
-import PropTypes from "prop-types";
-import FormHelperText from '@mui/material/FormHelperText';
+import PropTypes, { element } from "prop-types";
+import FormHelperText from "@mui/material/FormHelperText";
 const CustomInputSelect = ({ data, handleChange, formData, errors }) => {
     const theme = createTheme({
         components: {
@@ -46,10 +46,12 @@ const CustomInputSelect = ({ data, handleChange, formData, errors }) => {
             },
         },
     });
+    const initialName = data.find((element) => element.id === formData.member)
+        ?.name[0];
     return (
         <>
             {formData.member !== "" ? (
-                <div className="logo-person">{formData.member[0]}</div>
+                <div className="logo-person">{initialName}</div>
             ) : null}
             <ThemeProvider theme={theme}>
                 <FormControl error={errors.error}>

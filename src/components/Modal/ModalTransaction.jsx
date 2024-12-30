@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import "./ModalTransaction.css";
 import Modal from "@mui/material/Modal";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { IconButton } from "@mui/material";
+import { IconButton, patch } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import {
     CustomInput,
@@ -13,8 +13,13 @@ import {
 import dayjs from "dayjs";
 import axios from "axios";
 import { transactionContext } from "../../context/transactionContext";
-const ModalTransaction = ({ dataMembers }) => {
-    const [open, setOpen] = useState(false);
+
+const ModalTransaction = ({
+    open,
+    setOpen,
+    isEdit = false,
+    selectedTransaction,
+}) => {
     const [formData, setFormData] = useState({
         member: "",
         amount: 0,
@@ -44,12 +49,38 @@ const ModalTransaction = ({ dataMembers }) => {
             text: "",
         },
     });
-    const { getTransactions } = useContext(transactionContext);
-    useEffect(() => {
-        setFormData({ ...formData, data: generateMemberData() });
-    }, [dataMembers]);
+    const { getTransactions, dataMembers } = useContext(transactionContext);
 
-    const handleOpen = () => setOpen(true);
+    useEffect(() => {
+        if (!isEdit) {
+            setFormData({ ...formData, data: generateMemberData() });
+        } else {
+            console.log(selectedTransaction);
+            setFormData({
+                member: selectedTransaction.id_origin,
+                amount: selectedTransaction.amount,
+                data: dataMembers.reduce((acc, element) => {
+                    let isDestination =
+                        selectedTransaction.id_destination.includes(element.id);
+                    acc.push({
+                        id: element.id,
+                        name: element.name,
+                        amountMember: isDestination
+                            ? debtCalculation(
+                                  selectedTransaction,
+                                  selectedTransaction.id_destination.length
+                              )
+                            : 0,
+                        checked: isDestination,
+                    });
+                    return acc;
+                }, []),
+                subject: selectedTransaction.description,
+                date: selectedTransaction.date,
+            });
+        }
+    }, [dataMembers, selectedTransaction]);
+
     const handleClose = () => {
         setFormData({
             member: "",
@@ -121,7 +152,7 @@ const ModalTransaction = ({ dataMembers }) => {
         const updateData = newArrayData.map((element) => ({
             ...element,
             amountMember: element.checked
-                ? debtCalculation(filteredCheck.length)
+                ? debtCalculation(formData, filteredCheck.length)
                 : 0,
         }));
         setFormData({ ...formData, data: updateData });
@@ -202,10 +233,21 @@ const ModalTransaction = ({ dataMembers }) => {
             return !errors[element].error;
         });
         if (formHasErrors) {
-            await postTransaction();
+            if (isEdit) {
+                await patchTransaction();
+            } else {
+                await postTransaction();
+            }
             await getTransactions();
             handleClose();
         }
+    };
+    const handleClickDelete = async () => {
+        await axios.delete(
+            `http://localhost:3000/transaction/${selectedTransaction.id}`
+        );
+        await getTransactions();
+        handleClose();
     };
     const postTransaction = async () => {
         const payLoad = {
@@ -220,16 +262,31 @@ const ModalTransaction = ({ dataMembers }) => {
                 return acc;
             }, []),
         };
-        await axios.post(`http://localhost:3000/addTransaction`, payLoad);
+        await axios.post(`http://localhost:3000/transaction`, payLoad);
     };
-    const debtCalculation = (members) => {
+    const patchTransaction = async () => {
+        const payLoad = {
+            id: selectedTransaction.id,
+            amount: formData.amount,
+            description: formData.subject,
+            date: formData.date,
+            id_origin: formData.member,
+            id_destination: formData.data.reduce((acc, element) => {
+                if (element.checked) {
+                    acc.push(element.id);
+                }
+                return acc;
+            }, []),
+        };
+        await axios.patch("http://localhost:3000/transaction", payLoad);
+    };
+    const debtCalculation = (dataForm, members) => {
         if (members === 0) return 0;
-        let result = formData.amount / members;
+        let result = dataForm.amount / members;
         return parseFloat(result.toFixed(2));
     };
     return (
         <div>
-            <CustomButton onClick={handleOpen} label={"Añadir Transacción"} />
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -257,6 +314,7 @@ const ModalTransaction = ({ dataMembers }) => {
                         onChange={handleChange}
                         name={"amount"}
                         errors={errors.inputAmount}
+                        value={formData.amount}
                     />
                     <div
                         className={
@@ -302,6 +360,7 @@ const ModalTransaction = ({ dataMembers }) => {
                                         <Checkbox
                                             onChange={handleChangeCheck}
                                             name={`${index}`}
+                                            checked={member.checked}
                                         />
                                     </div>
                                 );
@@ -313,15 +372,32 @@ const ModalTransaction = ({ dataMembers }) => {
                         name={"subject"}
                         onChange={handleChange}
                         errors={errors.inputSubject}
+                        value={formData.subject}
                     />
                     <CustomDate
                         handleChangeDay={handleChangeDay}
                         data={formData}
                     />
-                    <CustomButton
-                        label={"Añadir Gasto"}
-                        onClick={handleClick}
-                    />
+                    {isEdit ? (
+                        <>
+                            <CustomButton
+                                label={"Eliminar"}
+                                variant={"text"}
+                                onClick={handleClickDelete}
+                            />{" "}
+                            <CustomButton
+                                label={"Guardar"}
+                                variant={"contained"}
+                                onClick={handleClick}
+                            />
+                        </>
+                    ) : (
+                        <CustomButton
+                            label={"Añadir Gasto"}
+                            variant={"contained"}
+                            onClick={handleClick}
+                        />
+                    )}
                 </div>
             </Modal>
         </div>

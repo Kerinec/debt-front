@@ -1,14 +1,16 @@
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
-const CustomButton = (props) =>{
+import { color } from "chart.js/helpers";
+const CustomButton = (props) => {
+    const isText = props.variant === "text";
     const ColorButton = styled(Button)(({ theme }) => ({
-        backgroundColor: "#fd5858",
+        backgroundColor: isText ? "none" : "#fd5858",
+        color: isText ? "#fd5858": "#fff",
         "&:hover": {
-            backgroundColor: "#FFAB91",
+            backgroundColor: isText ? "#FFAB9130": "#FFAB91",
+            color: "#fff" 
         },
     }));
-    return (<ColorButton variant="contained" {...props}>
-        {props.label}
-    </ColorButton>)
-}
-export default CustomButton
+    return <ColorButton {...props}>{props.label}</ColorButton>;
+};
+export default CustomButton;

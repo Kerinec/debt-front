@@ -1,15 +1,18 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "./ModalMembers.css";
 import Modal from "@mui/material/Modal";
 import { CustomInput, CustomButton } from "../CustomComponents";
 import axios from "axios";
-const ModalMembers = ({ getMembers }) => {
+import { transactionContext } from "../../context/transactionContext";
+
+const ModalMembers = () => {
     const [open, setOpen] = useState(false);
     const [inputValue, setInputValue] = useState("");
     const [errorExist, setErrorExist] = useState({
         error: false,
         helperText: "",
     });
+    const { getMembers } = useContext(transactionContext);
     const handleOpen = () => setOpen(true);
     const handleClose = () => {
         setErrorExist({

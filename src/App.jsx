@@ -6,12 +6,15 @@ import Members from "./components/Members/Members";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import StateCompo from "./context/StateCompo";
+import { CustomButton } from "./components/CustomComponents";
 function App() {
     const [dataMembers, setDataMembers] = useState([]);
-
+    const [open, setOpen] = useState(false);
     useEffect(() => {
         getMembers();
     }, []);
+    const handleOpen = () => setOpen(true);
+
     const getMembers = async () => {
         let response = await axios.get(`http://localhost:3000/members`);
         setDataMembers(response.data);
@@ -46,7 +49,8 @@ function App() {
                     <a href="http://localhost:5173/">
                         <div className="logo">Pasta Gansa</div>
                     </a>
-                    <ModalTransaction dataMembers={dataMembers} />
+                    <CustomButton onClick={handleOpen} label={"Añadir Transacción"} />
+                    <ModalTransaction dataMembers={dataMembers} open={open} setOpen={setOpen}/>
                     <div className="user-info">
                         <div className="user-name">Carlos Kerinec</div>
                         <div className="user-email">
