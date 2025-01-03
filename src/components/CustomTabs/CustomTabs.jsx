@@ -1,4 +1,4 @@
-import {useState } from "react";
+import { useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
@@ -7,7 +7,11 @@ import { styled } from "@mui/material/styles";
 const CustomTabPanel = ({ children, value, index }) => {
     return (
         <div hidden={value !== index}>
-            {value === index && <Box sx={{ p: 3,display: "flex",justifyContent: "center" }}>{children}</Box>}
+            {value === index && (
+                <Box sx={{ p: 3, display: "flex", justifyContent: "center" }}>
+                    {children}
+                </Box>
+            )}
         </div>
     );
 };

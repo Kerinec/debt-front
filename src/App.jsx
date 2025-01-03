@@ -1,16 +1,15 @@
 import { BrowserRouter, Routes, Route } from "react-router";
 import StateCompo from "./context/StateCompo";
-import Login from "./components/Login/Login";
+import HomePage from "./components/HomePage/HomePage";
 import Dashboard from "./components/Dashboard/Dashboard";
-import ProtectedComponent from "./components/ProtectedRoute";
+import ProtectedComponent from "./components/ProtectedComponent";
 
 function App() {
-    
     return (
         <StateCompo>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<Login />} />
+                    <Route path="/" element={<HomePage />} />
                     <Route
                         path="/dashboard"
                         element={
