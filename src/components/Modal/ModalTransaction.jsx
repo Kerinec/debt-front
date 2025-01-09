@@ -262,7 +262,7 @@ const ModalTransaction = ({
                 return acc;
             }, []),
         };
-        await axios.post(`http://localhost:3000/transaction`, payLoad);
+        await axios.post("http://localhost:3000/transaction", payLoad);
     };
     const patchTransaction = async () => {
         const payLoad = {

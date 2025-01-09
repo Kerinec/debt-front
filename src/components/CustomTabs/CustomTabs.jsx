@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
@@ -49,13 +49,15 @@ const StyledTabs = styled((props) => (
     },
 });
 
-function CustomTabs({ data }) {
+function CustomTabs({ data, changeTab = 0, setChangeTab }) {
     const [tabValue, setTabValue] = useState(0);
-
+    useEffect(() => {
+        setTabValue(changeTab);
+    }, [changeTab]);
     const handleChange = (event, newTabValue) => {
         setTabValue(newTabValue);
+        setChangeTab(newTabValue);
     };
-
     return (
         <>
             <StyledTabs value={tabValue} onChange={handleChange} centered>
