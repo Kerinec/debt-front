@@ -1,6 +1,6 @@
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-function Notification({ open, setOpen }) {
+function Notification({ open, setOpen, severity, message }) {
     const handleClose = (event, reason) => {
         if (reason === "clickaway") {
             return;
@@ -12,11 +12,11 @@ function Notification({ open, setOpen }) {
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert
                     onClose={handleClose}
-                    severity="success"
+                    severity={severity}
                     variant="filled"
                     sx={{ width: "100%" }}
                 >
-                    Se ha registrado correctamente
+                    {message}
                 </Alert>
             </Snackbar>
         </div>

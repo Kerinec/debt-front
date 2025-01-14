@@ -4,11 +4,13 @@ import Transaction from "../Transaction/Transaction";
 import ModalTransaction from "../Modal/ModalTransaction";
 import Members from "../Members/Members";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { CustomButton } from "../CustomComponents";
+import { authCreateContext } from "../../context/authCreateContext";
 function Dashboard() {
     const [dataMembers, setDataMembers] = useState([]);
     const [open, setOpen] = useState(false);
+    const { logout } = useContext(authCreateContext);
     useEffect(() => {
         getMembers();
     }, []);
@@ -40,7 +42,9 @@ function Dashboard() {
             content: "Informacion de las Actividad Reciente",
         },
     ];
-
+    const handleClick = () => {
+        logout();
+    };
     return (
         <>
             <header>
@@ -58,7 +62,9 @@ function Dashboard() {
                 />
                 <div className="user-info">
                     <div className="user-name">Carlos Kerinec</div>
-                    <div className="user-email">carloskerinec@gmail.com</div>
+                    <span className="logout" onClick={handleClick}>
+                        Cerrar sesión
+                    </span>
                 </div>
             </header>
             <main>

@@ -102,3 +102,12 @@ header {
 a {
     text-decoration: none;
 }
+.logout{
+    font-size: 14px;
+    color: #fd5858;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.logout:hover{
+    color: #ff9191;
+}

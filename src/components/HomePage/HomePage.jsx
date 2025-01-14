@@ -1,22 +1,61 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CustomButton, CustomInput } from "../CustomComponents";
 import CustomTabs from "../CustomTabs/CustomTabs";
 import "./HomePage.css";
 import axios from "axios";
 import Notification from "../Notification/Notification";
+import { authCreateContext } from "../../context/authCreateContext";
 function HomePage() {
     const [changeTab, setChangeTab] = useState(0);
-    const [openAlert, setOpenAlert] = useState(false);
+    const [openAlert, setOpenAlert] = useState({
+        success: false,
+        error: false,
+    });
+    const { login } = useContext(authCreateContext);
     const handleClick = (value) => {
         setChangeTab(value);
     };
 
     const Login = () => {
+        const [formData, setFormData] = useState({
+            username: "",
+            password: "",
+        });
+        const handleChange = (e) => {
+            setFormData({ ...formData, [e.target.name]: e.target.value });
+        };
+
+        const handleClickLogin = async () => {
+            const payload = {
+                username: formData.username,
+                password: formData.password,
+            };
+            try {
+                await login(payload);
+            } catch (error) {
+                if (error.status === 400) {
+                    setOpenAlert({ ...openAlert, error: true });
+                }
+            }
+        };
         return (
             <div className="login-register-container">
-                <CustomInput label={"Nombre de usuario"} />
-                <CustomInput label={"Contraseña"} type={"password"} />
-                <CustomButton label={"Iniciar sesión"} />
+                <CustomInput
+                    label={"Nombre de usuario"}
+                    onChange={handleChange}
+                    name={"username"}
+                    value={formData.username}
+                />
+                <CustomInput
+                    label={"Contraseña"}
+                    type={"password"}
+                    onChange={handleChange}
+                    name={"password"}
+                />
+                <CustomButton
+                    label={"Iniciar sesión"}
+                    onClick={handleClickLogin}
+                />
                 <div className="have-acount-container">
                     <span>No estás registrado?</span>
                     <span
@@ -111,8 +150,8 @@ function HomePage() {
             if (formHasErrors) {
                 try {
                     await postRegister();
-                    setOpenAlert(true);
-                    setChangeTab(0)
+                    setOpenAlert({ ...openAlert, success: true });
+                    setChangeTab(0);
                 } catch (error) {
                     if (error.status === 400) {
                         setErrors({
@@ -183,7 +222,6 @@ function HomePage() {
             content: <Register />,
         },
     ];
-    console.log(openAlert);
     return (
         <div className="home-container">
             <div className="background">
@@ -193,7 +231,22 @@ function HomePage() {
                     setChangeTab={setChangeTab}
                 />
             </div>
-            <Notification open={openAlert} setOpen={setOpenAlert} />
+            <Notification
+                open={openAlert.success}
+                setOpen={(isOpen) =>
+                    setOpenAlert({ ...openAlert, success: isOpen })
+                }
+                severity="success"
+                message="Se ha registrado correctamente"
+            />
+            <Notification
+                open={openAlert.error}
+                setOpen={(isOpen) =>
+                    setOpenAlert({ ...openAlert, error: isOpen })
+                }
+                severity="error"
+                message="Usuario o contraseña incorrecta"
+            />
         </div>
     );
 }
