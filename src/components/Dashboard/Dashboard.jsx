@@ -55,11 +55,6 @@ function Dashboard() {
                     onClick={handleOpen}
                     label={"Añadir Transacción"}
                 />
-                <ModalTransaction
-                    dataMembers={dataMembers}
-                    open={open}
-                    setOpen={setOpen}
-                />
                 <div className="user-info">
                     <div className="user-name">Carlos Kerinec</div>
                     <span className="logout" onClick={handleClick}>
@@ -67,6 +62,11 @@ function Dashboard() {
                     </span>
                 </div>
             </header>
+            <ModalTransaction
+                dataMembers={dataMembers}
+                open={open}
+                setOpen={setOpen}
+            />
             <main>
                 <div className="balance-container">
                     <div className="balance-section">
