@@ -5,6 +5,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { createTheme } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
 import dayjs from "dayjs";
+import { color } from "chart.js/helpers";
 
 const CustomDate = ({ handleChangeDay, data }) => {
     const theme = createTheme({
@@ -46,6 +47,15 @@ const CustomDate = ({ handleChangeDay, data }) => {
                 styleOverrides: {
                     root: {
                         color: "#fff",
+                        "&.MuiPickersArrowSwitcher-rightArrowIcon": {
+                            color: "black",
+                        },
+                        "&.MuiPickersArrowSwitcher-leftArrowIcon": {
+                            color: "black",
+                        },
+                        "&.MuiPickersCalendarHeader-switchViewIcon": {
+                            color: "black",
+                        },
                     },
                 },
             },
@@ -60,7 +70,6 @@ const CustomDate = ({ handleChangeDay, data }) => {
                             label="Fecha"
                             value={dayjs(data.date)}
                             onChange={handleChangeDay}
-                            
                         />
                     </DemoContainer>
                 </LocalizationProvider>
