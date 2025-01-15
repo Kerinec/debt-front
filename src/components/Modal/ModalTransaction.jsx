@@ -13,6 +13,7 @@ import {
 import dayjs from "dayjs";
 import axios from "axios";
 import { transactionContext } from "../../context/transactionContext";
+import ModalConfirmation from "./ModalConfirmation";
 
 const ModalTransaction = ({
     open,
@@ -49,6 +50,7 @@ const ModalTransaction = ({
             text: "",
         },
     });
+    const [openConfirmation, setOpenConfirmation] = useState(false);
     const { getTransactions, dataMembers } = useContext(transactionContext);
 
     useEffect(() => {
@@ -247,6 +249,7 @@ const ModalTransaction = ({
         );
         await getTransactions();
         handleClose();
+        setOpenConfirmation(false);
     };
     const postTransaction = async () => {
         const payLoad = {
@@ -382,7 +385,7 @@ const ModalTransaction = ({
                             <CustomButton
                                 label={"Eliminar"}
                                 variant={"text"}
-                                onClick={handleClickDelete}
+                                onClick={() => setOpenConfirmation(true)}
                             />{" "}
                             <CustomButton
                                 label={"Guardar"}
@@ -397,6 +400,11 @@ const ModalTransaction = ({
                             onClick={handleClick}
                         />
                     )}
+                    <ModalConfirmation
+                        openConfirmation={openConfirmation}
+                        setOpenConfirmation={setOpenConfirmation}
+                        handleClickDelete={handleClickDelete}
+                    />
                 </div>
             </Modal>
         </div>

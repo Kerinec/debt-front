@@ -4,6 +4,7 @@ import HomePage from "./components/HomePage/HomePage";
 import Dashboard from "./components/Dashboard/Dashboard";
 import ProtectedComponent from "./components/ProtectedComponent";
 import AuthContext from "./context/AuthContext";
+import "./App.css";
 
 function App() {
     return (
