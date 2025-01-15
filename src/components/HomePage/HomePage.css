@@ -1,0 +1,36 @@
+.home-container {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.background {
+    background-color: #676767;
+    width: 400px;
+    border-radius: 10px;
+}
+
+.login-register-container {
+    background-color: #676767;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    width: 300px;
+}
+.have-acount-container{
+    display: flex;
+    justify-content: space-around;
+}
+.redirect-register {
+    color: rgb(173, 173, 245);
+    cursor: pointer;
+}
+.redirect-register:hover {
+    text-decoration: underline;
+}
+

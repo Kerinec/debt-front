@@ -55,7 +55,6 @@ const ModalTransaction = ({
         if (!isEdit) {
             setFormData({ ...formData, data: generateMemberData() });
         } else {
-            console.log(selectedTransaction);
             setFormData({
                 member: selectedTransaction.id_origin,
                 amount: selectedTransaction.amount,
@@ -262,7 +261,7 @@ const ModalTransaction = ({
                 return acc;
             }, []),
         };
-        await axios.post(`http://localhost:3000/transaction`, payLoad);
+        await axios.post("http://localhost:3000/transaction", payLoad);
     };
     const patchTransaction = async () => {
         const payLoad = {

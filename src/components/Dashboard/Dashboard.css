@@ -1,0 +1,112 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #333;
+}
+.logo {
+    font-size: 24px;
+    color: #fd5858;
+}
+
+.transaction-button {
+    background-color: #fe9800;
+    color: #000000;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.user-info {
+    text-align: right;
+}
+
+.user-name {
+    text-align: right;
+    font-weight: 700;
+}
+
+.user-email {
+    font-size: 13px;
+}
+
+.balance-container {
+    display: flex;
+    justify-content: center;
+}
+.balance-section {
+    display: flex;
+    padding: 20px;
+    align-items: center;
+}
+
+.balance-circle {
+    width: 100px;
+    height: 100px;
+    background-color: #a57c8d;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-right: 50px;
+    text-align: center;
+}
+
+.balance-amount {
+    font-size: 19px;
+}
+
+.balance-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.graphic {
+    background-color: #595656;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.menu {
+    display: flex;
+    justify-content: center;
+    background-color: #3b3a3a;
+    padding: 10px 0px;
+}
+
+.options {
+    padding: 10px 15px;
+    cursor: pointer;
+    color: #c0bfbf;
+    border: none;
+    font-size: 16px;
+    background: transparent;
+}
+
+.options:hover {
+    color: #fff;
+    font-weight: 700;
+}
+.red-text{
+    color: #ffa3a3;
+}
+a {
+    text-decoration: none;
+}
+.logout{
+    font-size: 14px;
+    color: #fd5858;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.logout:hover{
+    color: #ff9191;
+}
