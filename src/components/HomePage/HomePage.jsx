@@ -92,7 +92,6 @@ function HomePage() {
                 const response = await axios.get(
                     `http://localhost:3000/user/${formData.username}`
                 );
-                console.log(response.data);
                 if (response.data.userExist) {
                     setErrors({
                         ...errors,
@@ -141,12 +140,10 @@ function HomePage() {
             setErrors(deltaErrors);
         };
         const handleClickRegister = async () => {
-            console.log("entramos en handleClick");
             validateForm();
             let formHasErrors = Object.keys(errors).every((element) => {
                 return !errors[element].error;
             });
-            console.log(formHasErrors, "prueba de error");
             if (formHasErrors) {
                 try {
                     await postRegister();

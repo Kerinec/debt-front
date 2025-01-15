@@ -15,16 +15,18 @@ const AuthContext = ({ children }) => {
             navigate("/dashboard");
         }
     }, []);
-    // useEffect(() => {
-    //     if (isLogged) {
-    //     }
-    // }, [isLogged]);
+    useEffect(() => {
+        if (isLogged) {
+            getUser();
+        }
+    }, [isLogged]);
     const getUser = async () => {
-        await axios.get("http://localhost:3000/user", {
+        const response = await axios.get("http://localhost:3000/user", {
             headers: {
                 token: token,
             },
         });
+        setUser(response.data.username);
     };
     const login = async (payload) => {
         const response = await axios.post(
@@ -42,7 +44,7 @@ const AuthContext = ({ children }) => {
         navigate("/");
     };
     return (
-        <authCreateContext.Provider value={{ login, isLogged, logout }}>
+        <authCreateContext.Provider value={{ login, isLogged, logout, user }}>
             {children}
         </authCreateContext.Provider>
     );

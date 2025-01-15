@@ -10,7 +10,7 @@ import { authCreateContext } from "../../context/authCreateContext";
 function Dashboard() {
     const [dataMembers, setDataMembers] = useState([]);
     const [open, setOpen] = useState(false);
-    const { logout } = useContext(authCreateContext);
+    const { logout, user } = useContext(authCreateContext);
     useEffect(() => {
         getMembers();
     }, []);
@@ -56,7 +56,7 @@ function Dashboard() {
                     label={"Añadir Transacción"}
                 />
                 <div className="user-info">
-                    <div className="user-name">Carlos Kerinec</div>
+                    <div className="user-name">{user}</div>
                     <span className="logout" onClick={handleClick}>
                         Cerrar sesión
                     </span>

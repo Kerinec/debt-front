@@ -55,7 +55,6 @@ const ModalTransaction = ({
         if (!isEdit) {
             setFormData({ ...formData, data: generateMemberData() });
         } else {
-            console.log(selectedTransaction);
             setFormData({
                 member: selectedTransaction.id_origin,
                 amount: selectedTransaction.amount,

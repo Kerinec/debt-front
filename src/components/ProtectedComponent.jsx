@@ -5,7 +5,6 @@ import { useContext } from "react";
 const ProtectedComponent = ({ children }) => {
     const { isLogged } = useContext(authCreateContext);
     let navigate = useNavigate();
-    console.log(isLogged);
     useEffect(() => {
         if (!isLogged) {
             navigate("/");
