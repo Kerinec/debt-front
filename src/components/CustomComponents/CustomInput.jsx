@@ -11,7 +11,7 @@ const CustomInput = (props) => {
                     root: {
                         "--bgColor": "#333",
                         "--color": "#fff",
-                        backgroundColor: "var(--bgColor)",
+                        backgroundColor: "var(--bgColor) !important",
                         "& label": {
                             color: "var(--color)",
                         },
@@ -37,6 +37,11 @@ const CustomInput = (props) => {
                         },
                         "&:hover .MuiOutlinedInput-notchedOutline": {
                             borderColor: "#ff5",
+                        },
+                        "&:-webkit-autofill": {
+                            WebkitBoxShadow:
+                                "0 0 0 1000px #333 inset !important",
+                            WebkitTextFillColor: "#000 !important",
                         },
                     },
                 },

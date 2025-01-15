@@ -1,0 +1,21 @@
+.confirmation-container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #424242;
+    color: #fff;
+    padding: 20px 40px;
+    min-width: 400px;
+}
+p{
+    margin: 10px 0;
+}
+.button-container{
+    display: flex;
+    justify-content: end;
+    gap: 20px;
+    padding: 10px 0;
+}
