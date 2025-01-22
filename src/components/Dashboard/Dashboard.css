@@ -29,9 +29,6 @@ header {
     font-weight: 700;
 }
 
-.user-email {
-    font-size: 13px;
-}
 
 .balance-container {
     display: flex;
@@ -95,18 +92,30 @@ header {
     color: #fff;
     font-weight: 700;
 }
-.red-text{
+.red-text {
     color: #ffa3a3;
 }
 a {
     text-decoration: none;
 }
-.logout{
+.logout {
     font-size: 14px;
     color: #fd5858;
     text-decoration: underline;
     cursor: pointer;
 }
-.logout:hover{
+.logout:hover {
     color: #ff9191;
+}
+@media only screen and (max-width: 720px) {
+    header {
+        height: 40px;
+    }
+    .logo,.user-name{
+        font-size: 14px;
+    }
+    .logout{
+        font-size: 12px;
+        
+    }
 }

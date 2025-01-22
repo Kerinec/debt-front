@@ -33,6 +33,7 @@ function HomePage() {
             try {
                 await login(payload);
             } catch (error) {
+                alert(error.toString())
                 if (error.status === 400) {
                     setOpenAlert({ ...openAlert, error: true });
                 }

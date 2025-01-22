@@ -69,3 +69,22 @@
     width: 30px;
     height: 30px;
 }
+@media only screen and (max-width: 720px) {
+.header-transaction{
+    font-size: 14px;
+}
+.icon-origin,.icon-destination{
+    width: 25px;
+    height: 25px;
+    font-size: 12px;
+}
+.info-subject,.info-member-origin{
+    font-size: 14px;
+}
+.debt-transaction{
+    font-size: 12px;
+}
+.info-date{
+    font-size: 10px;
+}
+}

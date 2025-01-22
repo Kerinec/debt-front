@@ -48,9 +48,8 @@ function Dashboard() {
     return (
         <>
             <header>
-                <a href="http://localhost:5173/">
-                    <div className="logo">Pasta Gansa</div>
-                </a>
+                <div className="logo">Pasta Gansa</div>
+
                 <CustomButton
                     onClick={handleOpen}
                     label={"Añadir Transacción"}
