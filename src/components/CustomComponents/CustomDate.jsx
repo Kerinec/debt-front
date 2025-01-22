@@ -13,6 +13,7 @@ const CustomDate = ({ handleChangeDay, data }) => {
             MuiTextField: {
                 styleOverrides: {
                     root: {
+                        width: "100%",
                         "--bgColor": "#333",
                         "--color": "#fff",
                         backgroundColor: "var(--bgColor)",

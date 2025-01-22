@@ -298,7 +298,7 @@ const ModalTransaction = ({
                 <div className="debt-form-container">
                     <div className="debt-header-container">
                         <h2 className="title-new-expense">Nuevo gasto</h2>
-                        <IconButton>
+                        <IconButton className="iconTest" onClick={handleClose}>
                             <CancelIcon className="icon" />
                         </IconButton>
                     </div>
@@ -381,7 +381,7 @@ const ModalTransaction = ({
                         data={formData}
                     />
                     {isEdit ? (
-                        <>
+                        <div className="buttons-edit">
                             <CustomButton
                                 label={"Eliminar"}
                                 variant={"text"}
@@ -392,13 +392,15 @@ const ModalTransaction = ({
                                 variant={"contained"}
                                 onClick={handleClick}
                             />
-                        </>
+                        </div>
                     ) : (
-                        <CustomButton
-                            label={"Añadir Gasto"}
-                            variant={"contained"}
-                            onClick={handleClick}
-                        />
+                        <div className="button-new-expend">
+                            <CustomButton
+                                label={"Añadir Gasto"}
+                                variant={"contained"}
+                                onClick={handleClick}
+                            />
+                        </div>
                     )}
                     <ModalConfirmation
                         openConfirmation={openConfirmation}

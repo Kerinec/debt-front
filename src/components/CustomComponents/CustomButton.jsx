@@ -10,6 +10,9 @@ const CustomButton = (props) => {
             backgroundColor: isText ? "#FFAB9130" : "#FFAB91",
             color: "#fff",
         },
+        "@media (max-width:720px)" : {
+            fontSize: "10px"
+        }
     }));
     return <ColorButton {...props}>{props.label} </ColorButton>;
 };

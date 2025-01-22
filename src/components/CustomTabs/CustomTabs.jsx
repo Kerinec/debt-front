@@ -20,6 +20,12 @@ const StyledTab = styled((props) => <Tab {...props} />)(({ theme }) => ({
     fontSize: theme.typography.pxToRem(16),
     padding: "10px 15px",
     color: "#fff",
+    "@media (max-width:720px)": {
+        display: "flex",
+        flexWrap: "wrap",
+        fontSize: "10px",
+        width: "90px",
+    },
     "&.Mui-selected": {
         color: "#fd5858",
         borderColor: "#fd5858",
@@ -37,6 +43,7 @@ const StyledTabs = styled((props) => (
         TabIndicatorProps={{
             children: <span className="MuiTabs-indicatorSpan" />,
         }}
+        scrollButtons="auto"
     />
 ))({
     "& .MuiTabs-indicator": {
