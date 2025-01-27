@@ -30,7 +30,10 @@ const Transaction = ({ editTransaction, setEditTransaction }) => {
             )}
             {transactionData.map((data, index) => {
                 return (
-                    <>
+                    <div
+                        className="transactions-container"
+                        key={`${data.date}${index}`}
+                    >
                         <div className="header-transaction">
                             <div className="transaction-month">{data.date}</div>
                             <div className="transaction-expend">
@@ -62,7 +65,7 @@ const Transaction = ({ editTransaction, setEditTransaction }) => {
                                 />
                             );
                         })}
-                    </>
+                    </div>
                 );
             })}
         </div>

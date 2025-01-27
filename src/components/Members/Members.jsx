@@ -32,7 +32,7 @@ const Members = () => {
                     if (element.id_origin === idMember) {
                         let calcule =
                             element.amount / element.id_destination.length;
-                        acc += calcule * element.id_destination.length - 1;
+                        acc += calcule * (element.id_destination.length - 1);
                     } else {
                         acc += -(
                             element.amount / element.id_destination.length

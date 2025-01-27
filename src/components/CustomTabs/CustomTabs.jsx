@@ -56,7 +56,7 @@ const StyledTabs = styled((props) => (
     },
 });
 
-function CustomTabs({ data, changeTab = 0, setChangeTab }) {
+function CustomTabs({ data, changeTab = 0, setChangeTab = () => {} }) {
     const [tabValue, setTabValue] = useState(0);
     useEffect(() => {
         setTabValue(changeTab);
@@ -64,6 +64,7 @@ function CustomTabs({ data, changeTab = 0, setChangeTab }) {
     const handleChange = (event, newTabValue) => {
         setTabValue(newTabValue);
         setChangeTab(newTabValue);
+        console.log(newTabValue);
     };
     return (
         <>

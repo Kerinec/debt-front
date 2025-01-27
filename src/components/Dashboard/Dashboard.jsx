@@ -1,6 +1,7 @@
 import "./Dashboard.css";
 import CustomTabs from "../CustomTabs/CustomTabs";
 import Transaction from "../Transaction/Transaction";
+import Debts from "../Debts/Debts";
 import ModalTransaction from "../Modal/ModalTransaction";
 import Members from "../Members/Members";
 import axios from "axios";
@@ -27,7 +28,7 @@ function Dashboard() {
         },
         {
             label: "Deudas",
-            content: "Informacion de las Deudas",
+            content: <Debts />,
         },
         {
             label: "Miembros",
